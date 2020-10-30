@@ -32,9 +32,15 @@ namespace code_challenge
                 options.UseInMemoryDatabase("EmployeeDB");
             });
             services.AddScoped<IEmployeeRepository,EmployeeRespository>();
+            services.AddDbContext<CompensationContext>(options =>
+            {
+                options.UseInMemoryDatabase("CompensationDB");
+            });
+            services.AddScoped<ICompensationRepository,CompensationRepository>();
             services.AddTransient<EmployeeDataSeeder>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IReportingStructureService, ReportingStructureService>();
+            services.AddScoped<ICompensationService, CompensationService>();
             services.AddMvc();
         }
 

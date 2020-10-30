@@ -11,12 +11,10 @@ namespace challenge.Services
     public class ReportingStructureService : IReportingStructureService
     {
         private readonly IEmployeeRepository _employeeRepository;   // Needed for getting the employee that will be added into the ReportingStructure.
-        private readonly ILogger<EmployeeService> _logger;          // Logs all of the necessary debug statements.
 
-        public ReportingStructureService(ILogger<EmployeeService> logger, IEmployeeRepository employeeRepository)
+        public ReportingStructureService(IEmployeeRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
-            _logger = logger;
         }
 
         /// <summary>
@@ -33,11 +31,11 @@ namespace challenge.Services
                 // Getting the employee in order to add it to the struture
                 var employee = _employeeRepository.GetById(id);
 
-                reportingStructure.employee = employee;
+                reportingStructure.Employee = employee;
 
                 int reports = GetDirectReports(employee);
 
-                reportingStructure.numberOfReports = reports;
+                reportingStructure.NumberOfReports = reports;
 
                 return reportingStructure;
             }
@@ -53,7 +51,7 @@ namespace challenge.Services
 
             if (reportsList != null)
             {
-                if (reportsList.Count == 0)
+                if (reportsList.Count != 0)
                 {
                     foreach (Employee e in reportsList)
                     {

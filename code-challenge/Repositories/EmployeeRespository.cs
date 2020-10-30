@@ -29,7 +29,12 @@ namespace challenge.Repositories
 
         public Employee GetById(string id)
         {
-            return _employeeContext.Employees.SingleOrDefault(e => e.EmployeeId == id);
+            var employee = _employeeContext.Employees.Include(e => e.DirectReports).SingleOrDefault(e => e.EmployeeId == id);       // Added the Include to make sure we don't lose the DirectReports.
+            if (employee != null)
+            {
+                return employee;
+            }
+            return null;
         }
 
         public Task SaveAsync()
